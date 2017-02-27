@@ -1,0 +1,83 @@
+#include<bits/stdc++.h>
+using namespace std;
+int max(int a, int b);
+
+int lcs( int *A,int n)
+{
+   int L[n];
+   int i,c=1;
+   for (i=1; i<n-1; i++)
+   {
+     int k=i;
+     if(A[i]<A[i-1])
+     {
+         if(A[i+1]>A[i])
+            {
+                L[i]=0;
+                c++;
+            }
+        else
+            if(A[i+1]<A[i])
+                L[i]=1;
+            else
+                L[i]=-1;
+     }
+     else
+     {
+        if(A[i]>A[i-1])
+            {   if(A[i+1]>A[i])
+                    L[i]=2;
+                 else
+                 {
+                     if(A[i+1]<A[i])
+                      {
+                        L[i] = 0;
+                        c++;
+                      }
+                      else
+                        L[i]=-1;
+                 }
+             }
+        else if(A[i-1]==A[i])
+        {
+            if(A[i+1]==A[i])
+                L[i]=-1;
+            else
+            {
+                while(L[k]==-1)
+                 k--;
+                if((A[k-1]>A[i]&&A[i+1]>A[i]) || (A[k-1]<A[i]&&A[i+1]<A[i]))
+                    c++;
+            }
+        }
+    }
+   }
+
+   for(int j=0;j<n;j++)
+   {
+       if(L[j]==0)
+        cout<<" "<<A[j];
+   }
+
+   if(n==1)
+    return c;
+   else
+    return c+1;
+}
+
+int main()
+{
+  int n;
+  cout << "enter total no. elements \n";
+  cin>>n;
+  int A[n];
+  for(int i=0;i<n;i++)
+  {
+      cout<<"enter element no." << i+1<<endl;
+      cin>> A[i];
+  }
+
+  printf("\nLength of ZigZag is %d\n", lcs( A,n ) );
+
+  return 0;
+}
