@@ -1,1 +1,48 @@
+import collections
+ 
+class Graph:
+    
+    def __init__(internal,vertices):
+        internal.V= vertices #No. of vertices
+        internal.graph = [] # default dictionary to store graph
+  
+    # edge addition
+    def edgeadd(internal,u,v,w):
+        internal.graph.append([u, v, w])
+         
+    # printing function
+    def printarray(internal, dist):
+        print("Vertex   Distance from the given Source S")
+        for i in range(internal.V):
+            print("%d \t\t %d" % (i, dist[i]))
+     
+    def bellmanF(internal, src):
 
+        dist = [float("Inf")] * internal.V    #Initialization of distnaces from source to all vertices as infinity
+        dist[src] = 0
+         #relaxation
+        for i in range(internal.V - 1):
+            for u, v, w in internal.graph:
+                if dist[u] != float("Inf") and dist[u] + w < dist[v]:
+                        dist[v] = dist[u] + w
+ 
+ 
+        for u, v, w in internal.graph:
+                if dist[u] != float("Inf") and dist[u] + w < dist[v]:
+                        print ("Graph has negative weight cycle")
+                        return
+                         
+        internal.printarray(dist)
+ 
+g = Graph(5)
+g.edgeadd(0, 1, -1)
+g.edgeadd(0, 2, 4)
+g.edgeadd(1, 2, 3)
+g.edgeadd(1, 3, 2)
+g.edgeadd(1, 4, 2)
+g.edgeadd(3, 2, 5)
+g.edgeadd(3, 1, 1)
+g.edgeadd(4, 3, -3)
+ 
+    
+g.bellmanF(0)
