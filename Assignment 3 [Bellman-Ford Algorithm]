@@ -1,3 +1,5 @@
+#python code using existing dictionary imported from collections module
+
 import collections
  
 class Graph:
